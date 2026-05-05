@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762833992202",
+    "project_id": "rehan-traders-edb1d",
+    "storage_bucket": "rehan-traders-edb1d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762833992202:android:2c477a10ec15c112783df3",
+        "android_client_info": {
+          "package_name": "com.example.rehan_trader_website"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAYadUkbc16UkOsXFQkQVUDJtuJuaqY0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
