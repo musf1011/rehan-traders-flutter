@@ -1,9 +1,9 @@
 //created by: FAMZY CodeWorks
 
 import 'package:flutter/material.dart';
-import 'package:rehan_trader_website/presentation/ui/screens/admin-login/admin_login_screen.dart';
-import 'package:rehan_trader_website/presentation/ui/screens/dashboard-screen/dashboard_screen.dart';
-import 'package:rehan_trader_website/presentation/ui/screens/splash-screen/splash_screen.dart';
+import 'package:rehan_trader_website/views/ui/screens/admin-login/admin_login_screen.dart';
+import 'package:rehan_trader_website/views/ui/screens/dashboard-screen/dashboard_screen.dart';
+import 'package:rehan_trader_website/views/ui/screens/splash-screen/splash_screen.dart';
 
 class AppRoutes {
   static const String splash = '/';

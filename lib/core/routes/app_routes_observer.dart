@@ -1,6 +1,6 @@
 // created by: FAMZY CodeWorks
 import 'package:flutter/material.dart';
-import 'package:rehan_trader_website/services/navigation_service.dart';
+import 'package:rehan_trader_website/core/services/navigation_service.dart';
 
 class AppRouteObserver extends RouteObserver<PageRoute<dynamic>> {
   @override

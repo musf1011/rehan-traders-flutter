@@ -111,7 +111,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialMediaButtons extends StatelessWidget {

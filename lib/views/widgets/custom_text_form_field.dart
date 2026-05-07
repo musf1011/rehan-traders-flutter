@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
@@ -21,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool isSmallScreen;
   final IconData? icon;
+  final Widget? suffixIcon;
 
   const CustomTextFormField({
     super.key,
@@ -41,6 +42,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onSaved,
     this.inputFormatters,
     this.icon,
+    this.suffixIcon,
   });
 
   @override
@@ -82,7 +84,7 @@ class CustomTextFormField extends StatelessWidget {
                       : AppConstants.tertiaryColor,
                 ),
               )
-            : null,
+            : suffixIcon,
 
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),

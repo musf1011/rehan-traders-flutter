@@ -44,7 +44,7 @@
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
 
 class NavigationService {
   static final NavigationService _instance = NavigationService._internal();

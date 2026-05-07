@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
-import 'package:rehan_trader_website/presentation/providers/admin_auth_provider.dart';
-import 'package:rehan_trader_website/presentation/providers/screen_size_controller.dart';
-import 'package:rehan_trader_website/presentation/ui/resources/custom_loading_button.dart';
-import 'package:rehan_trader_website/presentation/ui/widgets/custom_image_view.dart';
-import 'package:rehan_trader_website/presentation/ui/widgets/custom_text_form_field.dart';
-import 'package:rehan_trader_website/routes/app_routes.dart';
-import 'package:rehan_trader_website/services/navigation_service.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
+import 'package:rehan_trader_website/view-models/providers/admin_auth_provider.dart';
+import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
+import 'package:rehan_trader_website/views/ui/resources/custom_loading_button.dart';
+import 'package:rehan_trader_website/views/widgets/custom_image_view.dart';
+import 'package:rehan_trader_website/views/widgets/custom_text_form_field.dart';
+import 'package:rehan_trader_website/core/routes/app_routes.dart';
+import 'package:rehan_trader_website/core/services/navigation_service.dart';
 
 class AdminLoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

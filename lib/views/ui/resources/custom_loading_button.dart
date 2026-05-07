@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
 
 class CustomLoadingButton extends StatelessWidget {
   final String? text;

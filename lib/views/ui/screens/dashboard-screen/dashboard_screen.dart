@@ -2,15 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
-import 'package:rehan_trader_website/presentation/providers/admin_auth_provider.dart';
-import 'package:rehan_trader_website/presentation/providers/main_provider.dart';
-import 'package:rehan_trader_website/presentation/providers/screen_size_controller.dart';
-import 'package:rehan_trader_website/presentation/ui/resources/custom_loading_button.dart';
-import 'package:rehan_trader_website/presentation/ui/screens/home-screen/home_screen.dart';
-import 'package:rehan_trader_website/presentation/ui/widgets/custom_image_view.dart';
-import 'package:rehan_trader_website/routes/app_routes.dart';
-import 'package:rehan_trader_website/services/navigation_service.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
+import 'package:rehan_trader_website/view-models/providers/admin_auth_provider.dart';
+import 'package:rehan_trader_website/view-models/providers/main_provider.dart';
+import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
+import 'package:rehan_trader_website/views/ui/resources/custom_loading_button.dart';
+import 'package:rehan_trader_website/views/ui/screens/admin-add-product/admin_product_screen.dart';
+import 'package:rehan_trader_website/views/ui/screens/home-screen/home_screen.dart';
+import 'package:rehan_trader_website/views/widgets/custom_image_view.dart';
+import 'package:rehan_trader_website/core/routes/app_routes.dart';
+import 'package:rehan_trader_website/core/services/navigation_service.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -123,8 +124,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   // ),
                   _buildAttentionBanner(isSmallScreen),
                   Expanded(
-                    child: _ScreensExample(
-                      controller: mainProvider.sideBarController,
+                    child: Container(
+                      child: _ScreensExample(
+                        controller: mainProvider.sideBarController,
+                      ),
                     ),
                   ),
                 ],
@@ -280,11 +283,10 @@ class ExampleSidebarX extends StatelessWidget {
       },
       items: [
         _buildSidebarItem(context, 'HOME', 0),
-        _buildSidebarItem(context, 'SALES REGISTER', 1),
-        _buildSidebarItem(context, 'SALES REPORT', 2),
-        _buildSidebarItem(context, 'PRODUCTS', 3),
-        _buildSidebarItem(context, 'PAYMENTS', 4),
-        if (isAdminLoggedIn) _buildSidebarItem(context, 'ADD PRODUCT', 5),
+        if (isAdminLoggedIn) _buildSidebarItem(context, 'ADD PRODUCT', 1),
+        // _buildSidebarItem(context, 'SALES REGISTER', 2),
+        // _buildSidebarItem(context, 'SALES REPORT', 2),
+        // _buildSidebarItem(context, 'PRODUCTS', 3),
       ],
     );
   }
@@ -355,6 +357,7 @@ class _ScreensExample extends StatelessWidget {
           case 0:
             return const HomeScreen();
           case 1:
+            return AdminProductForm();
           // return const SalesRegisterScreen();
           case 2:
           // return const SalesReportScreen();
@@ -362,8 +365,8 @@ class _ScreensExample extends StatelessWidget {
           // return const ProductsScreen();
           case 4:
           // return const PaymentsScreen();
+
           case 5:
-          // return const EmployeeScreen();
           default:
             return Text(
               pageTitle,
@@ -388,7 +391,7 @@ String _getTitleByIndex(int index) {
     case 4:
       return 'Payments';
     case 5:
-      return 'Employees';
+      return 'ADD PRODUCT';
     default:
       return 'Not found page';
   }

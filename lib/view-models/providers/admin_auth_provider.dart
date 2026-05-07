@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rehan_trader_website/services/admin_auth_service.dart';
+import 'package:rehan_trader_website/core/services/admin_auth_service.dart';
 
 class AdminProvider extends ChangeNotifier {
   AdminProvider() {

@@ -55,10 +55,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:rehan_trader_website/presentation/constants/app_constants.dart';
-import 'package:rehan_trader_website/presentation/providers/screen_size_controller.dart';
-import 'package:rehan_trader_website/presentation/ui/widgets/custom_image_view.dart';
-import 'package:rehan_trader_website/presentation/ui/widgets/social_media_buttons_row.dart';
+import 'package:rehan_trader_website/core/constants/app_constants.dart';
+import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
+import 'package:rehan_trader_website/views/widgets/custom_image_view.dart';
+import 'package:rehan_trader_website/views/widgets/social_media_buttons_row.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
