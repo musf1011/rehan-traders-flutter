@@ -52,9 +52,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenController = Provider.of<ScreenSizeController>(context);
-    screenController.updateScreenSize(context);
-    final isSmallScreen = screenController.isSmallScreen;
+    // final screenController = Provider.of<ScreenSizeController>(context);
+    // // screenController.updateScreenSize(context);
+    // final isSmallScreen = screenController.isSmallScreen;
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
     return
     // AppAuthBackground(
     //   child:

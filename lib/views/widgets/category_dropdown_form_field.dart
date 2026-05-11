@@ -28,10 +28,10 @@ class CategoryDropdownFormField extends StatelessWidget {
       borderRadius: BorderRadius.circular(15.r),
       dropdownColor: AppConstants.primaryColor,
 
-      iconEnabledColor: Colors.grey,
+      iconEnabledColor: AppConstants.primaryColor,
 
       decoration: InputDecoration(
-        label: const Text('Category', style: TextStyle(color: Colors.white)),
+        label: const Text('Category', style: TextStyle(color: Colors.black)),
         hint: Text(
           'Not Selected',
           style: TextStyle(color: AppConstants.whiteColorP5),

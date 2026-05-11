@@ -22,43 +22,24 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // final _controller = SidebarXController(selectedIndex: 0, extended: true);
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  // final GlobalKey<NavigatorState> _overlayNavigatorKey =
-  //     GlobalKey<NavigatorState>();
-  // List<bool> selectedItems = List.generate(7, (index) => false);
-
-  // bool _isAdminLoggedIn = false;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   selectedItems[0] = true;
-  //   _controller.selectIndex(0);
-  // }
-
-  // void _onSidebarItemTapped(int index) {
-  //   _controller.selectIndex(index);
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // final adminProvider = Provider.of<AdminProvider>(context);
-    // final isAdminLoggedIn = adminProvider.isAdminLoggedIn;
-    // final isAdminLoggedIn = context.select<AdminProvider, bool>(
-    //   (adminProvider) => adminProvider.isAdminLoggedIn,
-    // );
-    // debugPrint("*****Admin logged in (Dashboard): $isAdminLoggedIn*****");
-
     final mainProvider = Provider.of<MainProvider>(context);
     // Get the screen size controller
-    final screenController = Provider.of<ScreenSizeController>(context);
+    // final screenController = Provider.of<ScreenSizeController>(context);
 
     // Update screen size on each build (this will trigger rebuild when size changes)
-    screenController.updateScreenSize(context);
+    // screenController.updateScreenSize(context);
 
     // Use the controller's isSmallScreen instead of calculating locally
-    final isSmallScreen = screenController.isSmallScreen;
+
+    // final screenController = context.watch<ScreenSizeController>();
+
+    // final isSmallScreen = screenController.isSmallScreen;
+
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
 
     return Container(
       height: 1.sh,
@@ -71,6 +52,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       child: Scaffold(
         backgroundColor: AppConstants.secondaryTransGColor,
+        // drawerBarrierDismissible: true,
+        // drawerDragStartBehavior: .down,
+        drawerEdgeDragWidth: 120.w,
+
+        // extendBody: true, //need to be studied more
+
+        // extendBodyBehindAppBar: true,
+        // onDrawerChanged: (mainProvider.onDrawerChanged),
+        // primary: false,
+        // resizeToAvoidBottomInset: false,
         key: _key,
         appBar: isSmallScreen
             ? AppBar(
@@ -182,9 +173,12 @@ class ExampleSidebarX extends StatelessWidget {
     final isAdminLoggedIn = context.select<AdminProvider, bool>(
       (adminProvider) => adminProvider.isAdminLoggedIn,
     );
-    final isSmallScreen = Provider.of<ScreenSizeController>(
-      context,
-    ).isSmallScreen;
+    // final isSmallScreen = Provider.of<ScreenSizeController>(
+    //   context,
+    // ).isSmallScreen;
+
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
+
     return SidebarX(
       animationDuration: Duration(seconds: 2),
 
@@ -297,9 +291,11 @@ class ExampleSidebarX extends StatelessWidget {
     int index,
   ) {
     final mainProvider = Provider.of<MainProvider>(context, listen: false);
-    final isSmallScreen = Provider.of<ScreenSizeController>(
-      context,
-    ).isSmallScreen;
+    // final isSmallScreen = Provider.of<ScreenSizeController>(
+    //   context,
+    // ).isSmallScreen;
+
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
     return SidebarXItem(
       iconBuilder: (context, extended) => SizedBox(
         child: Column(
@@ -336,7 +332,13 @@ class ExampleSidebarX extends StatelessWidget {
         ),
       ),
       // onTap: () => onSidebarItemTapped(index),
-      onTap: () => mainProvider.onSidebarItemTapped(index),
+      onTap: () {
+        mainProvider.onSidebarItemTapped(index);
+        //close the drawer when an item is tapped (for small screens)
+        if (isSmallScreen) {
+          Navigator.of(context).pop();
+        }
+      },
     );
   }
 }
@@ -357,7 +359,7 @@ class _ScreensExample extends StatelessWidget {
           case 0:
             return const HomeScreen();
           case 1:
-            return AdminProductForm();
+            return AdminProductScreen();
           // return const SalesRegisterScreen();
           case 2:
           // return const SalesReportScreen();

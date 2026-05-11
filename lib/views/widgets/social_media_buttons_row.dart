@@ -214,7 +214,7 @@ class SocialMediaButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       // mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: .start,
+      // crossAxisAlignment: .center,
       children: [
         // WhatsApp Button
         IconButton(
@@ -261,7 +261,7 @@ class SocialMediaButtons extends StatelessWidget {
           icon: FaIcon(
             FontAwesomeIcons.xTwitter, // Updated for X/Twitter
             color: Colors.white, // Black (or use 0xFF1DA1F2 for old blue)
-            size: 24.h,
+            size: 28.h,
           ),
         ),
         SizedBox(width: 5.w),

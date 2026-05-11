@@ -54,7 +54,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:rehan_trader_website/core/constants/app_constants.dart';
 import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
 import 'package:rehan_trader_website/views/widgets/custom_image_view.dart';
@@ -66,8 +65,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get the screen controller
-    final screenController = Provider.of<ScreenSizeController>(context);
-    final isSmallScreen = screenController.isSmallScreen;
+    // final screenController = Provider.of<ScreenSizeController>(context);
+    // final isSmallScreen = screenController.isSmallScreen;
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
     return SizedBox(
       height: isSmallScreen ? .9.sh : .97.sh,
       width: 1.sw,
@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                         "We Trades with Real Traders",
                         style: TextStyle(
                           color: AppConstants.whiteColorP7,
-                          fontSize: 32.sp,
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
                           decorationStyle: TextDecorationStyle.wavy,
@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                           "Our Mission is to empower traders with the tools and insights they need to succeed in the financial markets.",
                           style: TextStyle(
                             color: AppConstants.whiteColorP5,
-                            fontSize: 14.sp,
+                            fontSize: 10.sp,
                             height: 1.5,
                           ),
                         ),
@@ -138,13 +138,14 @@ class HomeScreen extends StatelessWidget {
                       // 4. Action Buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: .end,
                         children: [
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppConstants.primaryColor,
                               padding: EdgeInsets.symmetric(
-                                horizontal: 20.w,
+                                horizontal: 15.w, // was 20.w
                                 vertical: 12.h,
                               ),
                               shape: RoundedRectangleBorder(
@@ -156,7 +157,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          SizedBox(width: 12.w),
+                          SizedBox(width: 10.w),
                           OutlinedButton.icon(
                             onPressed: () {},
                             icon: const Icon(

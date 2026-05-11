@@ -1,3 +1,5 @@
+//created by: FAMZY CodeWorks
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
@@ -6,10 +8,11 @@ class ProductModel {
   String description;
   String category;
   double originalPrice;
-  double offerPercentage; // e.g., 10 for 10%
+  double offerPercentage;
   double discountedPrice;
   List<String> imageUrls;
   DateTime? createdAt;
+  DateTime? updatedAt;
 
   ProductModel({
     this.id,
@@ -21,6 +24,7 @@ class ProductModel {
     required this.discountedPrice,
     required this.imageUrls,
     this.createdAt,
+    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() => {
@@ -32,6 +36,7 @@ class ProductModel {
     'discountedPrice': discountedPrice,
     'imageUrls': imageUrls,
     'createdAt': createdAt ?? FieldValue.serverTimestamp(),
+    'updatedAt': updatedAt ?? FieldValue.serverTimestamp(),
   };
 
   factory ProductModel.fromMap(Map<String, dynamic> map, String id) =>

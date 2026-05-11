@@ -23,7 +23,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ScreenSizeController()),
+        // ChangeNotifierProvider(create: (_) => ScreenSizeController()),
         ChangeNotifierProvider(create: (_) => AdminProvider()),
         ChangeNotifierProvider(create: (_) => MainProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),

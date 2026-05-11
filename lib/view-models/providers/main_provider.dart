@@ -23,6 +23,7 @@ class MainProvider extends ChangeNotifier {
     for (int i = 0; i < selectedItems.length; i++) {
       selectedItems[i] = (i == index);
     }
+    // close the drawer when an item is tapped
 
     notifyListeners();
   }

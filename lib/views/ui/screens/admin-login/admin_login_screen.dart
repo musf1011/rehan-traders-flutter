@@ -21,13 +21,15 @@ class AdminLoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final adminProvider = Provider.of<AdminProvider>(context);
     // Get the screen size controller
-    final screenController = Provider.of<ScreenSizeController>(context);
+    // final screenController = Provider.of<ScreenSizeController>(context);
 
-    // Update screen size on each build (this will trigger rebuild when size changes)
-    screenController.updateScreenSize(context);
+    // // Update screen size on each build (this will trigger rebuild when size changes)
+    // // screenController.updateScreenSize(context);
 
-    // Use the controller's isSmallScreen instead of calculating locally
-    final isSmallScreen = screenController.isSmallScreen;
+    // // Use the controller's isSmallScreen instead of calculating locally
+    // final isSmallScreen = screenController.isSmallScreen;
+
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
 
     return Scaffold(
       // backgroundColor: const Color(0xFFF5F7FA), // Light, clean grey

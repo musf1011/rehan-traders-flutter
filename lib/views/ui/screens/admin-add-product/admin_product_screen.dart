@@ -1,8 +1,12 @@
+//created by: FAMZY CodeWorks
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rehan_trader_website/core/constants/app_constants.dart';
+import 'package:rehan_trader_website/core/services/navigation_service.dart';
 import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
 import 'package:rehan_trader_website/view-models/providers/product_provider.dart';
 import 'package:rehan_trader_website/views/ui/resources/custom_loading_button.dart';
@@ -10,17 +14,19 @@ import 'package:rehan_trader_website/views/widgets/category_dropdown_form_field.
 import 'package:rehan_trader_website/views/widgets/custom_glass_wrapper.dart';
 import 'package:rehan_trader_website/views/widgets/custom_text_form_field.dart';
 
-class AdminProductForm extends StatelessWidget {
+class AdminProductScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  AdminProductForm({super.key});
+  AdminProductScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    final isSmallScreen = Provider.of<ScreenSizeController>(
-      context,
-    ).isSmallScreen;
+    // final isSmallScreen = Provider.of<ScreenSizeController>(
+    //   context,
+    // ).isSmallScreen;
+    final isSmallScreen = ResponsiveHelper.isMobile(context);
+
     return SingleChildScrollView(
       padding: EdgeInsets.all(16.w),
       child: Form(
@@ -40,7 +46,7 @@ class AdminProductForm extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 180.h, //was 120.h
+                    height: isSmallScreen ? 110.h : 200.h, //was 120.h
                     child: ReorderableListView(
                       scrollDirection: Axis.horizontal,
                       onReorder: productProvider.reorderImages,
@@ -51,66 +57,180 @@ class AdminProductForm extends StatelessWidget {
                           i++
                         )
                           Container(
-                            key: ValueKey(productProvider.selectedImages[i]),
+                            key: ValueKey(
+                              productProvider.selectedImages[i].name,
+                            ),
                             margin: EdgeInsets.only(right: 10.w),
-                            width: 100.w,
+                            width: isSmallScreen ? 92.w : 65.w,
+                            // height: isSmallScreen ? 100.h : 200.h,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: i == 0 ? Colors.green : Colors.grey,
+                                color: i == 0
+                                    ? AppConstants.tertiaryColor
+                                    : Colors.grey,
                                 width: 2,
                               ),
                               image: DecorationImage(
-                                image: FileImage(
-                                  productProvider.selectedImages[i],
+                                // image: FileImage(
+                                //   productProvider.selectedImages[i],
+                                image: MemoryImage(
+                                  productProvider.selectedImages[i].bytes,
                                 ),
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            child: i == 0
-                                ? Align(
+                            // child: i == 0
+                            //     ? Align(
+                            //         alignment: Alignment.bottomCenter,
+                            //         child: Container(
+                            //           color: Colors.green,
+                            //           child: Text(
+                            //             "COVER",
+                            //             style: TextStyle(
+                            //               fontSize: 10.sp,
+                            //               color: Colors.white,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       )
+                            //     : null,
+                            child: Stack(
+                              children: [
+                                if (i == 0)
+                                  Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Container(
-                                      color: Colors.green,
+                                      width: double.infinity,
+                                      color: AppConstants.tertiaryColor,
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 4.h,
+                                      ),
                                       child: Text(
                                         "COVER",
+                                        textAlign: TextAlign.start,
                                         style: TextStyle(
-                                          fontSize: 10.sp,
+                                          fontSize: 6.sp,
                                           color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                  )
-                                : null,
+                                  ),
+
+                                Positioned(
+                                  // top: isSmallScreen ? 5.h : 7.h,
+                                  // right: isSmallScreen ? 5.w : 7.w,
+                                  top: 5.h,
+                                  right: 5.w,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      productProvider.removeImage(i);
+                                    },
+                                    child: CircleAvatar(
+                                      // minRadius: 18.h,
+                                      radius: isSmallScreen ? 12.r : 24.r,
+                                      backgroundColor: Colors.red,
+                                      child: Icon(
+                                        Icons.close,
+                                        size: isSmallScreen ? 14.sp : 10.sp,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+
                         if (productProvider.selectedImages.length < 3)
                           GestureDetector(
                             key: ValueKey("add_btn"),
-                            onTap: () {
-                              /* Trigger Image Picker */
+                            onTap: () async {
+                              await productProvider.pickImages();
                             },
                             child: Container(
                               width: 100.w,
-                              height: 200.h,
-                              color: Colors.grey[200],
-                              child: Icon(Icons.add_a_photo),
+                              // height: 200.h,
+                              color: AppConstants.whiteColorP7,
+                              child: Center(child: Icon(Icons.add_a_photo)),
                             ),
                           ),
                       ],
                     ),
                   ),
 
+                  // noImageSelected
+                  //     ? Text(
+                  //         '*At least one image is required',
+                  //         style: TextStyle(
+                  //           color: Colors.red,
+                  //           fontSize: isSmallScreen ? 10.sp : 4.sp,
+                  //         ),
+                  //       )
+                  //     : SizedBox.shrink(),
+
+                  // Image validation error message from provider
+                  Selector<ProductProvider, String?>(
+                    selector: (context, prod) => prod.imageValidationError,
+                    builder: (context, imageValidationError, child) {
+                      if (imageValidationError != null) {
+                        debugPrint(
+                          '*** product image valditor $imageValidationError',
+                        );
+                        return Padding(
+                          padding: EdgeInsets.only(top: 8.h),
+                          child: Text(
+                            imageValidationError,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: isSmallScreen ? 10.sp : 4.sp,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    },
+                  ),
+
+                  CustomTextFormField(
+                    controller: productProvider.nameController,
+                    label: 'Product Name',
+                    hint: 'Enter product name',
+                    icon: Icons.shopping_bag,
+                    isSmallScreen: isSmallScreen,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return '*Product name required';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  SizedBox(height: 15.h),
+
+                  CustomTextFormField(
+                    controller: productProvider.descriptionController,
+                    label: 'Description',
+                    hint: 'Enter product description',
+                    icon: Icons.description,
+                    maxLines: 3,
+                    isSmallScreen: isSmallScreen,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return '*Description required';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  SizedBox(height: 20.h),
+
                   // Pricing Section
                   Row(
                     children: [
                       Expanded(
-                        // child: TextFormField(
-                        //   decoration: InputDecoration(
-                        //     labelText: "Price (RS)",
-                        //     labelStyle: TextStyle(color: Colors.white),
-                        //   ),
-                        //   onChanged: (v) => pro.calculateDiscount(v, true),
-                        // ),
                         child: CustomTextFormField(
+                          controller: productProvider.priceController,
                           label: 'Price',
                           hint: '100',
                           icon: Icons.money,
@@ -125,26 +245,22 @@ class AdminProductForm extends StatelessWidget {
                             productProvider.calculateDiscount(value, true);
                           },
                           isSmallScreen: isSmallScreen,
-                        ),
-                      ),
-                      SizedBox(width: 10.w),
-                      Expanded(
-                        // child: TextFormField(
-                        //   decoration: InputDecoration(labelText: "Offer %"),
-                        //   onChanged: (v) =>
-                        //       productProvider.calculateDiscount(v, false),
-                        // ),
-                        child: CustomTextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return '*Price is required';
                             }
                             return null;
                           },
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: CustomTextFormField(
+                          controller: productProvider.offerController,
+
                           icon: Icons.local_offer,
                           label: 'Offer %',
                           hint: '0-100',
-                          // suffixIcon: Text('\$'),
                           suffixIcon: Icon(
                             Icons.percent,
                             color: AppConstants.primaryTransGColor,
@@ -159,26 +275,7 @@ class AdminProductForm extends StatelessWidget {
                             ),
                           ],
                           onChanged: (value) {
-                            // if (value.isEmpty) {
-                            //   offerController.text = '0';
-                            //   offerController.selection =
-                            //       TextSelection.fromPosition(
-                            //         TextPosition(
-                            //           offset: offerController.text.length,
-                            //         ),
-                            //       );
-                            // }
-
                             productProvider.calculateDiscount(value, false);
-                          },
-
-                          onTap: () {
-                            // if (offerController.text == '0') {
-                            //   offerController.selection = TextSelection(
-                            //     baseOffset: 0,
-                            //     extentOffset: offerController.text.length,
-                            //   );
-                            // }
                           },
                         ),
                       ),
@@ -193,17 +290,6 @@ class AdminProductForm extends StatelessWidget {
                       fontSize: isSmallScreen ? 16.sp : 8.sp,
                     ),
                   ),
-
-                  //   // Dropdown for Categories
-                  //   DropdownButtonFormField(
-                  //     items: categories
-                  //         .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  //         .toList(),
-                  //   onChanged: (v) {},
-                  //   decoration: InputDecoration(labelText: "Category"),
-                  // ),
-
-                  //   SizedBox(height: 50.h),
                   CategoryDropdownFormField(
                     onChanged: (value) {
                       productProvider.category = value ?? '';
@@ -215,16 +301,41 @@ class AdminProductForm extends StatelessWidget {
                       return null;
                     },
                   ),
+
+                  SizedBox(height: 50.h),
                 ],
               ),
             ),
             SizedBox(height: 20.h),
             CustomLoadingButton(
               isSmallScreen: isSmallScreen,
+              isLoading: productProvider.isLoading,
               height: isSmallScreen ? 50.h : 80.h,
               width: isSmallScreen ? .7.sw : .4.sw,
-              onPressed: () {
-                /* Call Provider Save Method */
+              onPressed: () async {
+                // Validate images using provider method
+                productProvider.validateImages();
+                if (_formKey.currentState?.validate() != true ||
+                    !productProvider.validateImages()) {
+                  debugPrint(
+                    '****** image validattr : ${productProvider.validateImages()}',
+                  );
+                  return;
+                }
+                final bool result = await productProvider.uploadProduct();
+                if (result) {
+                  NavigationService().showSnackBar(
+                    title: 'Success',
+                    message: 'Product Added Successfully...',
+                    type: ContentType.success,
+                  );
+                } else {
+                  NavigationService().showSnackBar(
+                    title: 'Failed',
+                    message: 'Failed to add Product...',
+                    type: ContentType.failure,
+                  );
+                }
               },
               text: 'UPLOAD PRODUCT',
             ),
