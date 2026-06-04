@@ -1,66 +1,31 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:rehan_trader_website/constants/app_constants.dart';
-// import 'package:rehan_trader_website/ui/widgets/custom_image_view.dart';
-
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         // CustomImageView(
-//         //   imagePath: AppConstants.businessDisplayImage,
-//         //   width: 1.sw,
-//         // ),
-//         Text('HELLO', style: TextStyle(color: AppConstants.famzyGold)),
-//         ...List.generate(
-//           15,
-//           (index) => Container(height: 10.h, width: 1.sw, color: Colors.black),
-//         ),
-//         Text('HELOO'),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//         SizedBox(height: 10.h),
-
-//         Container(height: 100.h, width: 1.sw, color: Colors.black),
-//       ],
-//     );
-//   }
-// }
+//created by: FAMZY CodeWorks
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:rehan_trader_website/core/constants/app_constants.dart';
 import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
+import 'package:rehan_trader_website/view-models/providers/home_provider.dart';
 import 'package:rehan_trader_website/views/widgets/custom_image_view.dart';
+import 'package:rehan_trader_website/views/widgets/home-screen-widgets/category_section.dart';
 import 'package:rehan_trader_website/views/widgets/social_media_buttons_row.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<HomeProvider>().initProducts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +33,7 @@ class HomeScreen extends StatelessWidget {
     // final screenController = Provider.of<ScreenSizeController>(context);
     // final isSmallScreen = screenController.isSmallScreen;
     final isSmallScreen = ResponsiveHelper.isMobile(context);
+    final homeProvider = Provider.of<HomeProvider>(context);
     return SizedBox(
       height: isSmallScreen ? .9.sh : .97.sh,
       width: 1.sw,
@@ -76,15 +42,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Stack(
-            //   child: CustomImageView(
-            //     imagePath: AppConstants.businessDisplayImage,
-            //     width: 1.sw,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
             Stack(
-              // alignment: Alignment.centerLeft,
               children: [
                 // 1. The Background Image
                 CustomImageView(
@@ -113,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                         "We Trades with Real Traders",
                         style: TextStyle(
                           color: AppConstants.whiteColorP7,
-                          fontSize: 22.sp,
+                          fontSize: isSmallScreen ? 28.sp : 22.sp,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
                           decorationStyle: TextDecorationStyle.wavy,
@@ -128,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                           "Our Mission is to empower traders with the tools and insights they need to succeed in the financial markets.",
                           style: TextStyle(
                             color: AppConstants.whiteColorP5,
-                            fontSize: 10.sp,
+                            fontSize: isSmallScreen ? 14.sp : 10.sp,
                             height: 1.5,
                           ),
                         ),
@@ -184,8 +142,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
 
-                          SizedBox(width: 10.w),
-
+                          // SizedBox(width: 10.w),
                           isSmallScreen
                               ? SizedBox.shrink()
                               : SocialMediaButtons(),
@@ -199,58 +156,96 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'HELLO',
-                style: TextStyle(
-                  color: AppConstants.famzyGold,
-                  fontSize: 24.sp,
-                ),
-              ),
-            ),
-            // GridView for products/items
-            GridView.builder(
-              shrinkWrap: true, // Important for using inside Column
-              physics:
-                  const NeverScrollableScrollPhysics(), // Disable inner scrolling
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of columns
-                crossAxisSpacing: 10, // Horizontal spacing between items
-                mainAxisSpacing: 10, // Vertical spacing between items
-                childAspectRatio: 0.8, // Height/width ratio of each item
-              ),
-              itemCount: 10, // Number of items
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: AppConstants.famzyGold,
-                    borderRadius: BorderRadius.circular(10.r),
+
+            // Padding(
+            //   padding: EdgeInsets.all(16.0),
+            //   child: Text(
+            //     'HELLO',
+            //     style: TextStyle(
+            //       color: AppConstants.famzyGold,
+            //       fontSize: 24.sp,
+            //     ),
+            //   ),
+            // ),
+            // // GridView for products/items
+            // GridView.builder(
+            //   shrinkWrap: true, // Important for using inside Column
+            //   physics:
+            //       const NeverScrollableScrollPhysics(), // Disable inner scrolling
+            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2, // Number of columns
+            //     crossAxisSpacing: 10, // Horizontal spacing between items
+            //     mainAxisSpacing: 10, // Vertical spacing between items
+            //     childAspectRatio: 0.8, // Height/width ratio of each item
+            //   ),
+            //   itemCount: 10, // Number of items
+            //   itemBuilder: (context, index) {
+            //     return Container(
+            //       decoration: BoxDecoration(
+            //         color: AppConstants.famzyGold,
+            //         borderRadius: BorderRadius.circular(10.r),
+            //       ),
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Icon(Icons.inventory, size: 50.sp),
+            //           SizedBox(height: 10.h),
+            //           Text('Item ${index + 1}'),
+            //         ],
+            //       ),
+            //     );
+            //   },
+            // ),
+            // const Padding(
+            //   padding: EdgeInsets.all(16.0),
+            //   child: Text('More Content', style: TextStyle(fontSize: 24)),
+            // ),
+            // ...List.generate(
+            //   5,
+            //   (index) => Container(
+            //     height: 100.h,
+            //     width: 1.sw,
+            //     color: Colors.black,
+            //     margin: EdgeInsets.only(bottom: 10.h),
+            //   ),
+            // ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Column(
+                children: [
+                  SizedBox(height: 10.h),
+                  SearchBar(
+                    hintText: 'Search Products...',
+                    hintStyle: WidgetStatePropertyAll(
+                      TextStyle(color: AppConstants.tertiaryTransGColor),
+                    ),
+                    leading: Icon(
+                      // Icons.filter_list,
+                      Icons.search,
+                      color: AppConstants.primaryTransGColor,
+                      size: isSmallScreen ? 30.h : 80.h,
+                    ),
+                    onChanged: homeProvider.updateSearch,
+                    textStyle: WidgetStatePropertyAll(
+                      TextStyle(color: AppConstants.primaryColor),
+                    ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.inventory, size: 50.sp),
-                      SizedBox(height: 10.h),
-                      Text('Item ${index + 1}'),
-                    ],
-                  ),
-                );
-              },
-            ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text('More Content', style: TextStyle(fontSize: 24)),
-            ),
-            ...List.generate(
-              5,
-              (index) => Container(
-                height: 100.h,
-                width: 1.sw,
-                color: Colors.black,
-                margin: EdgeInsets.only(bottom: 10.h),
+
+                  //want it to be in a loop giving each category and its products
+                  ...homeProvider.categories.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final category = entry.value;
+                    final products = homeProvider.productsByCategory(category);
+                    return CategorySection(
+                      category: category,
+                      products: products,
+                      index: index,
+                    );
+                  }),
+                ],
               ),
             ),
+            SizedBox(height: 20.h),
           ],
         ),
       ),

@@ -11,7 +11,7 @@ class AppConstants {
   // static const Color primaryColor = Color.fromARGB(255, 0, 57, 2);
 
   static const Color primaryColor = Color.fromARGB(255, 60, 130, 140);
-  static const Color secondaryColor = Color.fromARGB(150, 60, 100, 0);
+  static const Color secondaryColor = Color.fromARGB(255, 0, 150, 103);
   static const Color tertiaryColor = Color.fromARGB(255, 0, 255, 225);
   static const Color primaryTransGColor = Color.fromARGB(150, 0, 150, 110);
   static const Color secondaryTransGColor = Color.fromARGB(225, 0, 30, 30);
@@ -28,6 +28,7 @@ class AppConstants {
   static Color get whiteColorP9 => Colors.white.withAlpha((255 * 0.9).round());
   static Color get whiteColorP7 => Colors.white.withAlpha((255 * 0.7).round());
   static Color get whiteColorP5 => Colors.white.withAlpha((255 * 0.5).round());
+  static Color get whiteColorP3 => Colors.white.withAlpha((255 * 0.3).round());
 
   // --- Auth UI Colors ---
   static const Color authBgColor = Color(0xFFF5F5F5);
@@ -42,7 +43,7 @@ class AppConstants {
   //general
   static const Color accentColor = Color.fromARGB(200, 100, 200, 255);
   static const Color textColor = Colors.black87;
-  static const Color errorColor = Colors.red;
+  static const Color errorColor = Color.fromARGB(255, 200, 15, 0);
 
   // --- Specific Text Styles (from your example) ---
   static TextStyle appBarTextStyle = GoogleFonts.playfairDisplay(
@@ -54,7 +55,7 @@ class AppConstants {
   static TextStyle screenTitleTextStyle = GoogleFonts.playfairDisplay(
     fontSize: 40.sp,
     fontWeight: FontWeight.bold,
-    color: AppConstants.primaryColor,
+    color: AppConstants.tertiaryColor,
   );
   static TextStyle destNameTextStyle =
       //  TextStyle(
@@ -93,7 +94,7 @@ class AppConstants {
   );
 
   static TextStyle sendButtonTextStyle = TextStyle(
-    color: AppConstants.whiteColorP5,
+    color: AppConstants.whiteColorP5, //was p5
     fontWeight: FontWeight.bold,
     fontSize: 12.sp,
   );

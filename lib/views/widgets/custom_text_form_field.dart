@@ -61,6 +61,10 @@ class CustomTextFormField extends StatelessWidget {
       inputFormatters: inputFormatters,
       style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
+        errorStyle: TextStyle(
+          color: AppConstants.errorColor,
+          backgroundColor: AppConstants.whiteColorP3,
+        ),
         labelText: label,
         labelStyle: TextStyle(
           color: AppConstants.secondaryTransGColor,
@@ -93,7 +97,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: AppConstants.tertiaryColor),
         ),
         errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
+          borderSide: BorderSide(color: AppConstants.errorColor),
         ),
         focusedErrorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.redAccent),

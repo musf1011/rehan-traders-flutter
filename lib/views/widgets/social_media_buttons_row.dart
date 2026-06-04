@@ -134,7 +134,7 @@ class SocialMediaButtons extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Could not open WhatsApp'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppConstants.errorColor,
           ),
         );
       }
@@ -157,7 +157,7 @@ class SocialMediaButtons extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Could not open Instagram'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppConstants.errorColor,
           ),
         );
       }
@@ -180,7 +180,7 @@ class SocialMediaButtons extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Could not open Twitter/X'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppConstants.errorColor,
           ),
         );
       }
@@ -203,7 +203,7 @@ class SocialMediaButtons extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Could not open Facebook'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppConstants.errorColor,
           ),
         );
       }

@@ -21,10 +21,7 @@ class AdminProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<ProductProvider>(context);
-    // final isSmallScreen = Provider.of<ScreenSizeController>(
-    //   context,
-    // ).isSmallScreen;
+    final productProvider = context.watch<ProductProvider>();
     final isSmallScreen = ResponsiveHelper.isMobile(context);
 
     return SingleChildScrollView(
@@ -79,21 +76,6 @@ class AdminProductScreen extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            // child: i == 0
-                            //     ? Align(
-                            //         alignment: Alignment.bottomCenter,
-                            //         child: Container(
-                            //           color: Colors.green,
-                            //           child: Text(
-                            //             "COVER",
-                            //             style: TextStyle(
-                            //               fontSize: 10.sp,
-                            //               color: Colors.white,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       )
-                            //     : null,
                             child: Stack(
                               children: [
                                 if (i == 0)
@@ -107,10 +89,10 @@ class AdminProductScreen extends StatelessWidget {
                                       ),
                                       child: Text(
                                         "COVER",
-                                        textAlign: TextAlign.start,
+                                        textAlign: .center,
                                         style: TextStyle(
                                           fontSize: 6.sp,
-                                          color: Colors.white,
+                                          color: Colors.black45,
                                         ),
                                       ),
                                     ),
@@ -128,7 +110,7 @@ class AdminProductScreen extends StatelessWidget {
                                     child: CircleAvatar(
                                       // minRadius: 18.h,
                                       radius: isSmallScreen ? 12.r : 24.r,
-                                      backgroundColor: Colors.red,
+                                      backgroundColor: AppConstants.lightRed,
                                       child: Icon(
                                         Icons.close,
                                         size: isSmallScreen ? 14.sp : 10.sp,
@@ -158,16 +140,6 @@ class AdminProductScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // noImageSelected
-                  //     ? Text(
-                  //         '*At least one image is required',
-                  //         style: TextStyle(
-                  //           color: Colors.red,
-                  //           fontSize: isSmallScreen ? 10.sp : 4.sp,
-                  //         ),
-                  //       )
-                  //     : SizedBox.shrink(),
-
                   // Image validation error message from provider
                   Selector<ProductProvider, String?>(
                     selector: (context, prod) => prod.imageValidationError,
@@ -181,7 +153,8 @@ class AdminProductScreen extends StatelessWidget {
                           child: Text(
                             imageValidationError,
                             style: TextStyle(
-                              color: Colors.red,
+                              color: AppConstants.errorColor,
+                              backgroundColor: AppConstants.whiteColorP5,
                               fontSize: isSmallScreen ? 10.sp : 4.sp,
                             ),
                           ),
@@ -283,7 +256,7 @@ class AdminProductScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    "Final Price: RS ${productProvider.finalPrice.toStringAsFixed(1)}",
+                    "Final Price: RS ${productProvider.finalPrice.toStringAsFixed(0)}",
                     style: TextStyle(
                       color: AppConstants.whiteColorP9,
                       fontWeight: FontWeight.bold,

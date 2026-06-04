@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+//created by: FAMZY CodeWorks
 
 import 'dart:io';
 
@@ -8,31 +8,31 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomImageView extends StatelessWidget {
   ///[url] is required parameter for fetching network image
-  String? url;
+  final String? url;
 
   ///[imagePath] is required parameter for showing png,jpg,etc image
-  String? imagePath;
+  final String? imagePath;
 
   ///[svgPath] is required parameter for showing svg image
-  String? svgPath;
+  final String? svgPath;
 
   ///[file] is required parameter for fetching image file
-  File? file;
+  final File? file;
 
-  double? height;
-  double? width;
-  Color? color;
-  BoxFit? fit;
+  final double? height;
+  final double? width;
+  final Color? color;
+  final BoxFit? fit;
   final String placeHolder;
-  Alignment? alignment;
-  VoidCallback? onTap;
-  EdgeInsetsGeometry? margin;
-  BorderRadius? radius;
-  BoxBorder? border;
+  final Alignment? alignment;
+  final VoidCallback? onTap;
+  final EdgeInsetsGeometry? margin;
+  final BorderRadius? radius;
+  final BoxBorder? border;
 
   ///a [CustomImageView] it can be used for showing any type of images
   /// it will shows the placeholder image if image is not found on network image
-  CustomImageView({
+  const CustomImageView({
     super.key,
     this.url,
     this.imagePath,
@@ -47,7 +47,7 @@ class CustomImageView extends StatelessWidget {
     this.radius,
     this.margin,
     this.border,
-    this.placeHolder = 'assets/images/user.png',
+    this.placeHolder = 'assets/logos/company-logos.png',
   });
 
   @override
@@ -100,7 +100,6 @@ class CustomImageView extends StatelessWidget {
           width: width,
           // colorFilter: ColorFilter.mode(
           //     color!, BlendMode.srcIn), // color is deprecated used this one
-          // color: color,
           fit: fit ?? BoxFit.contain,
         ),
       );
@@ -127,12 +126,14 @@ class CustomImageView extends StatelessWidget {
             backgroundColor: Colors.grey.shade100,
           ),
         ),
-        errorWidget: (context, url, error) => Image.asset(
-          placeHolder,
-          height: height,
-          width: width,
-          fit: fit ?? BoxFit.cover,
-        ),
+        // errorWidget: (context, url, error) {
+        //   return Image.asset(
+        //     placeHolder,
+        //     height: height,
+        //     width: width,
+        //     fit: fit ?? BoxFit.cover,
+        //   );
+        // },
       );
     } else if (imagePath != null && imagePath!.isNotEmpty) {
       return Image.asset(

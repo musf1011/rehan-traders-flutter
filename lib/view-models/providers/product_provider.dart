@@ -45,7 +45,7 @@
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:rehan_trader_website/core/utils/product_helper.dart';
 import 'package:rehan_trader_website/models/product_image_model.dart';
 import 'package:rehan_trader_website/models/product_model.dart';
 import 'package:rehan_trader_website/core/services/product_service.dart';
@@ -81,6 +81,7 @@ class ProductProvider extends ChangeNotifier {
         allowMultiple: true,
         type: FileType.image,
         withData: true,
+        compressionQuality: 30,
       );
 
       if (result != null) {
@@ -152,7 +153,23 @@ class ProductProvider extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
+      // ProductModel product = ProductModel(
+
+      //   name: nameController.text.trim(),
+      //   description: descriptionController.text.trim(),
+      //   category: category,
+      //   originalPrice: originalPrice,
+      //   offerPercentage: offer,
+      //   discountedPrice: finalPrice,
+      //   imageUrls: [],
+      // );
+
+      final productId = ProductHelper.generateProductId(
+        nameController.text.trim(),
+      );
+
       ProductModel product = ProductModel(
+        id: productId,
         name: nameController.text.trim(),
         description: descriptionController.text.trim(),
         category: category,
@@ -160,6 +177,9 @@ class ProductProvider extends ChangeNotifier {
         offerPercentage: offer,
         discountedPrice: finalPrice,
         imageUrls: [],
+        searchKeywords: ProductHelper.generateSearchKeywords(
+          nameController.text.trim(),
+        ),
       );
 
       await _productService.saveProduct(product, selectedImages);

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:rehan_trader_website/core/constants/app_constants.dart';
 import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
 import 'package:rehan_trader_website/views/ui/screens/dashboard-screen/dashboard_screen.dart';
