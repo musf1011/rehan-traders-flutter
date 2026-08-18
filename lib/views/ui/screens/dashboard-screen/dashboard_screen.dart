@@ -33,59 +33,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final homeProvider = context.watch<HomeProvider>();
     final isSmallScreen = ResponsiveHelper.isMobile(context);
     final index = mainProvider.selectedIndex;
-    return Scaffold(
-      backgroundColor: AppConstants.secondaryTransGColor,
-      key: _key,
-      resizeToAvoidBottomInset: false,
-      appBar: isSmallScreen
-          ? AppBar(
-              backgroundColor: AppConstants.primaryColor,
-              // title: Text(mainProvider.currentTitle),
-              title: Text(
-                index == 0
-                    ? 'HOME'
-                    : index == 100
-                    ? 'ADD PRODUCT'
-                    : homeProvider.categories[index - 1],
-              ),
-              titleTextStyle: AppConstants.appBarTextStyle,
-              leading: IconButton(
-                onPressed: () {
-                  _key.currentState?.openDrawer();
-                },
-                icon: const Icon(Icons.menu),
-              ),
-            )
-          : null,
-      drawer: isSmallScreen ? ExampleSidebarX() : null,
-      body: Container(
-        height: 1.sh,
-        width: 1.sw,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppConstants.transRColor, AppConstants.blackColorP3],
-          ),
-          image: DecorationImage(
-            image: AssetImage(AppConstants.appBgImage),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [AppConstants.transGrey]),
-          ),
-          child: Row(
-            children: [
-              if (!isSmallScreen) ExampleSidebarX(),
-              Expanded(
-                child: Column(
-                  children: [
-                    _buildAttentionBanner(isSmallScreen),
-                    Expanded(child: _ScreensExample()),
-                  ],
+    return PopScope(
+      canPop: isSmallScreen,
+
+      child: Scaffold(
+        backgroundColor: AppConstants.secondaryTransGColor,
+        key: _key,
+        // resizeToAvoidBottomInset: false,
+        appBar: isSmallScreen
+            ? AppBar(
+                backgroundColor: AppConstants.primaryColor,
+                // title: Text(mainProvider.currentTitle),
+                title: Text(
+                  index == 0
+                      ? 'HOME'
+                      : index == 100
+                      ? 'ADD PRODUCT'
+                      : homeProvider.categories[index - 1],
                 ),
+                titleTextStyle: AppConstants.appBarTextStyle,
+                leading: IconButton(
+                  onPressed: () {
+                    _key.currentState?.openDrawer();
+                  },
+                  icon: const Icon(Icons.menu),
+                ),
+              )
+            : null,
+        drawer: isSmallScreen ? ExampleSidebarX() : null,
+        body: Container(
+          height: 1.sh,
+          width: 1.sw,
+          decoration: BoxDecoration(
+            // gradient: LinearGradient(
+            //   colors: [AppConstants.transRColor, AppConstants.blackColorP3],
+            // ),
+            image: DecorationImage(
+              image: AssetImage(AppConstants.appBgImage),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 1.0],
+                colors: [AppConstants.transGrey, AppConstants.blackColorP7],
               ),
-            ],
+            ),
+            child: Row(
+              children: [
+                if (!isSmallScreen) ExampleSidebarX(),
+                Expanded(
+                  child: Column(
+                    children: [
+                      _buildAttentionBanner(isSmallScreen),
+                      Expanded(child: _ScreensExample()),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -207,9 +216,9 @@ class ExampleSidebarX extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        NavigationService().navigateAndClearStack(
+                        NavigationService().navigateTo(
                           AppRoutes.adminLogin,
-                        );
+                        ); //neeed proper implementationfl
                       },
                       style: TextButton.styleFrom(),
                       child: Text('log in'),

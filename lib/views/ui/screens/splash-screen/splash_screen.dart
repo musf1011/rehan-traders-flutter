@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     debugPrint('*********splash Screen started');
-    Timer(const Duration(seconds: 5), () async {
+    Timer(const Duration(seconds: 2), () async {
       // SharedPreferences prefs = await SharedPreferences.getInstance();
       // bool isRememberMeChecked = prefs.getBool('isRememberMeChecked') ?? false;
 

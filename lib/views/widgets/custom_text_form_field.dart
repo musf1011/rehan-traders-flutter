@@ -59,11 +59,14 @@ class CustomTextFormField extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       inputFormatters: inputFormatters,
-      style: const TextStyle(color: Colors.black),
+      style: TextStyle(
+        color: AppConstants.tertiaryColor,
+        fontSize: isSmallScreen ? 16.sp : 6.sp,
+      ),
       decoration: InputDecoration(
         errorStyle: TextStyle(
           color: AppConstants.errorColor,
-          backgroundColor: AppConstants.whiteColorP3,
+          // backgroundColor: AppConstants.whiteColorP3,
         ),
         labelText: label,
         labelStyle: TextStyle(
@@ -75,7 +78,7 @@ class CustomTextFormField extends StatelessWidget {
 
         icon: Icon(
           obscureText ? Icons.lock : icon,
-          color: AppConstants.primaryTransGColor,
+          color: AppConstants.primaryColor,
           size: isSmallScreen ? 20.sp : 10.sp,
         ),
         suffixIcon: toggleVisibility != null
@@ -85,7 +88,7 @@ class CustomTextFormField extends StatelessWidget {
                   isPasswordHidden ? Icons.visibility_off : Icons.visibility,
                   color: isPasswordHidden
                       ? Colors.grey
-                      : AppConstants.tertiaryColor,
+                      : AppConstants.primaryColor,
                 ),
               )
             : suffixIcon,
@@ -94,13 +97,13 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppConstants.tertiaryColor),
+          borderSide: BorderSide(color: AppConstants.primaryColor),
         ),
         errorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: AppConstants.errorColor),
         ),
         focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.redAccent),
+          borderSide: BorderSide(color: AppConstants.errorColor),
         ),
       ),
     );

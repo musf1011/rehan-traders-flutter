@@ -136,6 +136,8 @@ class ProductProvider extends ChangeNotifier {
 
   // CALCULATE DISCOUNT
   void calculateDiscount(String value, bool isOriginalPrice) {
+    final oldPrice = finalPrice;
+
     if (isOriginalPrice) {
       originalPrice = double.tryParse(value) ?? 0;
     } else {
@@ -144,7 +146,9 @@ class ProductProvider extends ChangeNotifier {
 
     finalPrice = originalPrice - (originalPrice * (offer / 100));
 
-    notifyListeners();
+    if (oldPrice != finalPrice) {
+      notifyListeners();
+    }
   }
 
   // SAVE PRODUCT

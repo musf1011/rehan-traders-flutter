@@ -112,101 +112,150 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rehan_trader_website/core/constants/app_constants.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:rehan_trader_website/core/utils/url_launcher_helper.dart';
 
 class SocialMediaButtons extends StatelessWidget {
   const SocialMediaButtons({super.key});
 
-  // WhatsApp function
+  // // WhatsApp function
+  // Future<void> _launchWhatsApp(BuildContext context) async {
+  //   String phoneNumber = "923143094341";
+  //   String whatsappUrl = "https://web.whatsapp.com/send?phone=$phoneNumber";
+  //   final Uri url = Uri.parse(whatsappUrl);
+
+  //   try {
+  //     if (await canLaunchUrl(url)) {
+  //       await launchUrl(url, mode: LaunchMode.platformDefault);
+  //     } else {
+  //       throw 'Could not launch URL';
+  //     }
+  //   } catch (e) {
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('Could not open WhatsApp'),
+  //           backgroundColor: AppConstants.errorColor,
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
+  // // Instagram function
+  // Future<void> _launchInstagram(BuildContext context) async {
+  //   String instagramUrl = "https://www.instagram.com/famzycodeworks/";
+  //   final Uri url = Uri.parse(instagramUrl);
+
+  //   try {
+  //     if (await canLaunchUrl(url)) {
+  //       await launchUrl(url, mode: LaunchMode.platformDefault);
+  //     } else {
+  //       throw 'Could not launch URL';
+  //     }
+  //   } catch (e) {
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('Could not open Instagram'),
+  //           backgroundColor: AppConstants.errorColor,
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
+  // // Twitter/X function
+  // Future<void> _launchTwitter(BuildContext context) async {
+  //   String twitterUrl = "https://x.com/92MUSF";
+  //   final Uri url = Uri.parse(twitterUrl);
+
+  //   try {
+  //     if (await canLaunchUrl(url)) {
+  //       await launchUrl(url, mode: LaunchMode.platformDefault);
+  //     } else {
+  //       throw 'Could not launch URL';
+  //     }
+  //   } catch (e) {
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('Could not open Twitter/X'),
+  //           backgroundColor: AppConstants.errorColor,
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
+  // // Facebook function
+  // Future<void> _launchFacebook(BuildContext context) async {
+  //   String facebookUrl = "https://www.facebook.com/Musf92";
+  //   final Uri url = Uri.parse(facebookUrl);
+
+  //   try {
+  //     if (await canLaunchUrl(url)) {
+  //       await launchUrl(url, mode: LaunchMode.platformDefault);
+  //     } else {
+  //       debugPrint('Could not launch URL facebook: $facebookUrl');
+  //       throw 'Could not launch URL';
+  //     }
+  //   } catch (e) {
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('Could not open Facebook'),
+  //           backgroundColor: AppConstants.errorColor,
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
+  //whatsapp
   Future<void> _launchWhatsApp(BuildContext context) async {
-    String phoneNumber = "923143094341";
-    String whatsappUrl = "https://web.whatsapp.com/send?phone=$phoneNumber";
-    final Uri url = Uri.parse(whatsappUrl);
-
-    try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.platformDefault);
-      } else {
-        throw 'Could not launch URL';
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open WhatsApp'),
-            backgroundColor: AppConstants.errorColor,
-          ),
-        );
-      }
-    }
+    await UrlLauncherHelper.launchLink(
+      context: context,
+      url: 'https://wa.me/923143094341',
+      errorMessage: 'Could not open WhatsApp',
+    );
   }
 
-  // Instagram function
+  //instagram
   Future<void> _launchInstagram(BuildContext context) async {
-    String instagramUrl = "https://www.instagram.com/famzycodeworks/";
-    final Uri url = Uri.parse(instagramUrl);
-
-    try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.platformDefault);
-      } else {
-        throw 'Could not launch URL';
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open Instagram'),
-            backgroundColor: AppConstants.errorColor,
-          ),
-        );
-      }
-    }
+    await UrlLauncherHelper.launchLink(
+      context: context,
+      url: 'https://www.instagram.com/famzycodeworks/',
+      errorMessage: 'Could not open Instagram',
+    );
   }
 
-  // Twitter/X function
+  //twitter/x
   Future<void> _launchTwitter(BuildContext context) async {
-    String twitterUrl = "https://x.com/92MUSF";
-    final Uri url = Uri.parse(twitterUrl);
-
-    try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.platformDefault);
-      } else {
-        throw 'Could not launch URL';
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open Twitter/X'),
-            backgroundColor: AppConstants.errorColor,
-          ),
-        );
-      }
-    }
+    await UrlLauncherHelper.launchLink(
+      context: context,
+      url: 'https://x.com/92MUSF',
+      errorMessage: 'Could not open Twitter/X',
+    );
   }
 
-  // Facebook function
+  //facebook
   Future<void> _launchFacebook(BuildContext context) async {
-    String facebookUrl = "https://www.facebook.com/Musf92";
-    final Uri url = Uri.parse(facebookUrl);
+    // final BuildContext ctx = context;
 
     try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.platformDefault);
-      } else {
-        throw 'Could not launch URL';
-      }
+      await UrlLauncherHelper.launchLink(
+        context: context,
+        url: 'https://www.facebook.com/Musf92',
+        errorMessage: 'Could not open Facebook',
+      );
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open Facebook'),
-            backgroundColor: AppConstants.errorColor,
-          ),
-        );
-      }
+      if (!context.mounted) return;
+
+      await UrlLauncherHelper.launchLink(
+        context: context,
+        url: '100029515020904',
+        errorMessage: 'Could not open Facebook',
+      );
     }
   }
 

@@ -13,7 +13,7 @@ class AppConstants {
   static const Color primaryColor = Color.fromARGB(255, 60, 130, 140);
   static const Color secondaryColor = Color.fromARGB(255, 0, 150, 103);
   static const Color tertiaryColor = Color.fromARGB(255, 0, 255, 225);
-  static const Color primaryTransGColor = Color.fromARGB(150, 0, 150, 110);
+  static const Color primaryTransGColor = Color.fromARGB(50, 0, 150, 110);
   static const Color secondaryTransGColor = Color.fromARGB(225, 0, 30, 30);
   static const Color tertiaryTransGColor = Color.fromARGB(92, 0, 96, 80);
   static const Color lightGreen = Color.fromARGB(150, 100, 200, 100);
@@ -43,7 +43,7 @@ class AppConstants {
   //general
   static const Color accentColor = Color.fromARGB(200, 100, 200, 255);
   static const Color textColor = Colors.black87;
-  static const Color errorColor = Color.fromARGB(255, 200, 15, 0);
+  static const Color errorColor = Color.fromARGB(255, 100, 15, 0);
 
   // --- Specific Text Styles (from your example) ---
   static TextStyle appBarTextStyle = GoogleFonts.playfairDisplay(

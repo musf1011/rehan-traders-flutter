@@ -95,9 +95,17 @@ class CategoryDropdownFormField extends StatelessWidget {
       dropdownColor: AppConstants.primaryColor,
 
       iconEnabledColor: AppConstants.primaryColor,
-
+      style: TextStyle(color: AppConstants.tertiaryColor, fontSize: 16.sp),
       decoration: InputDecoration(
-        label: const Text('Category', style: TextStyle(color: Colors.black)),
+        prefixIcon: const Icon(
+          Icons.list_alt,
+          color: AppConstants.primaryColor,
+        ),
+        errorStyle: TextStyle(color: AppConstants.errorColor),
+        label: const Text(
+          'Category',
+          style: TextStyle(color: AppConstants.secondaryTransGColor),
+        ),
         hint: Text(
           'Not Selected',
           style: TextStyle(color: AppConstants.whiteColorP5),
@@ -106,7 +114,13 @@ class CategoryDropdownFormField extends StatelessWidget {
           borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppConstants.tertiaryColor),
+          borderSide: BorderSide(color: AppConstants.primaryColor),
+        ),
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppConstants.errorColor),
+        ),
+        focusedErrorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppConstants.errorColor),
         ),
       ),
       items: categories

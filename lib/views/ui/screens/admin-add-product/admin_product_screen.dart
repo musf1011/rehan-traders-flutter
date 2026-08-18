@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rehan_trader_website/core/constants/app_constants.dart';
 import 'package:rehan_trader_website/core/services/navigation_service.dart';
+import 'package:rehan_trader_website/models/product_image_model.dart';
 import 'package:rehan_trader_website/view-models/controllers/screen_size_controller.dart';
 import 'package:rehan_trader_website/view-models/providers/product_provider.dart';
 import 'package:rehan_trader_website/views/ui/resources/custom_loading_button.dart';
@@ -14,17 +15,30 @@ import 'package:rehan_trader_website/views/widgets/category_dropdown_form_field.
 import 'package:rehan_trader_website/views/widgets/custom_glass_wrapper.dart';
 import 'package:rehan_trader_website/views/widgets/custom_text_form_field.dart';
 
-class AdminProductScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+// class AdminProductScreen extends StatelessWidget {
+//   final _formKey = GlobalKey<FormState>();
 
-  AdminProductScreen({super.key});
+//   AdminProductScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+class AdminProductScreen extends StatefulWidget {
+  const AdminProductScreen({super.key});
+
+  @override
+  State<AdminProductScreen> createState() => _AdminProductScreenState();
+}
+
+class _AdminProductScreenState extends State<AdminProductScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = context.watch<ProductProvider>();
+    final productProvider = context.read<ProductProvider>();
     final isSmallScreen = ResponsiveHelper.isMobile(context);
 
     return SingleChildScrollView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       padding: EdgeInsets.all(16.w),
       child: Form(
         key: _formKey,
@@ -32,7 +46,6 @@ class AdminProductScreen extends StatelessWidget {
           children: [
             CustomGlassWrapper(
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Product Images (Max 3 - Drag to reorder)",
@@ -44,117 +57,115 @@ class AdminProductScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     height: isSmallScreen ? 110.h : 200.h, //was 120.h
-                    child: ReorderableListView(
-                      scrollDirection: Axis.horizontal,
-                      onReorder: productProvider.reorderImages,
-                      children: [
-                        for (
-                          int i = 0;
-                          i < productProvider.selectedImages.length;
-                          i++
-                        )
-                          Container(
-                            key: ValueKey(
-                              productProvider.selectedImages[i].name,
-                            ),
-                            margin: EdgeInsets.only(right: 10.w),
-                            width: isSmallScreen ? 92.w : 65.w,
-                            // height: isSmallScreen ? 100.h : 200.h,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: i == 0
-                                    ? AppConstants.tertiaryColor
-                                    : Colors.grey,
-                                width: 2,
-                              ),
-                              image: DecorationImage(
-                                // image: FileImage(
-                                //   productProvider.selectedImages[i],
-                                image: MemoryImage(
-                                  productProvider.selectedImages[i].bytes,
+                    child: Selector<ProductProvider, List<ProductImageModel>>(
+                      shouldRebuild: (prev, next) => true,
+                      selector: (_, prodProvider) =>
+                          prodProvider.selectedImages,
+                      builder: (_, selectedImages, _) => ReorderableListView(
+                        scrollDirection: Axis.horizontal,
+                        onReorder: productProvider.reorderImages,
+                        children: [
+                          for (int i = 0; i < selectedImages.length; i++)
+                            Container(
+                              key: ValueKey(selectedImages[i].name),
+                              margin: EdgeInsets.only(right: 10.w),
+                              width: isSmallScreen ? 92.w : 65.w,
+                              // height: isSmallScreen ? 100.h : 200.h,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: i == 0
+                                      ? AppConstants.tertiaryColor
+                                      : Colors.grey,
+                                  width: 2,
                                 ),
-                                fit: BoxFit.cover,
+                                image: DecorationImage(
+                                  // image: FileImage(
+                                  //   productProvider.selectedImages[i],
+                                  image: MemoryImage(selectedImages[i].bytes),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            child: Stack(
-                              children: [
-                                if (i == 0)
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      width: double.infinity,
-                                      color: AppConstants.tertiaryColor,
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 4.h,
+                              child: Stack(
+                                children: [
+                                  if (i == 0)
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        width: double.infinity,
+                                        color: AppConstants.tertiaryColor,
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 4.h,
+                                        ),
+                                        child: Text(
+                                          "COVER",
+                                          textAlign: .center,
+                                          style: TextStyle(
+                                            fontSize: 6.sp,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
                                       ),
-                                      child: Text(
-                                        "COVER",
-                                        textAlign: .center,
-                                        style: TextStyle(
-                                          fontSize: 6.sp,
-                                          color: Colors.black45,
+                                    ),
+
+                                  Positioned(
+                                    // top: isSmallScreen ? 5.h : 7.h,
+                                    // right: isSmallScreen ? 5.w : 7.w,
+                                    top: 5.h,
+                                    right: 5.w,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        productProvider.removeImage(i);
+                                      },
+                                      child: CircleAvatar(
+                                        // minRadius: 18.h,
+                                        radius: isSmallScreen ? 12.r : 24.r,
+                                        backgroundColor: AppConstants.lightRed,
+                                        child: Icon(
+                                          Icons.close,
+                                          size: isSmallScreen ? 14.sp : 10.sp,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
-
-                                Positioned(
-                                  // top: isSmallScreen ? 5.h : 7.h,
-                                  // right: isSmallScreen ? 5.w : 7.w,
-                                  top: 5.h,
-                                  right: 5.w,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      productProvider.removeImage(i);
-                                    },
-                                    child: CircleAvatar(
-                                      // minRadius: 18.h,
-                                      radius: isSmallScreen ? 12.r : 24.r,
-                                      backgroundColor: AppConstants.lightRed,
-                                      child: Icon(
-                                        Icons.close,
-                                        size: isSmallScreen ? 14.sp : 10.sp,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
 
-                        if (productProvider.selectedImages.length < 3)
-                          GestureDetector(
-                            key: ValueKey("add_btn"),
-                            onTap: () async {
-                              await productProvider.pickImages();
-                            },
-                            child: Container(
-                              width: 100.w,
-                              // height: 200.h,
-                              color: AppConstants.whiteColorP7,
-                              child: Center(child: Icon(Icons.add_a_photo)),
+                          if (selectedImages.length < 3)
+                            GestureDetector(
+                              key: ValueKey("add_btn"),
+                              onTap: () async {
+                                await productProvider.pickImages();
+                              },
+                              child: Container(
+                                width: 100.w,
+                                // height: 200.h,
+                                color: AppConstants.whiteColorP7,
+                                child: Center(child: Icon(Icons.add_a_photo)),
+                              ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
 
                   // Image validation error message from provider
                   Selector<ProductProvider, String?>(
-                    selector: (context, prod) => prod.imageValidationError,
-                    builder: (context, imageValidationError, child) {
-                      if (imageValidationError != null) {
+                    selector: (_, prodProvider) =>
+                        prodProvider.imageValidationError,
+                    builder: (_, imageValidationError, _) {
+                      if (productProvider.imageValidationError != null) {
                         debugPrint(
                           '*** product image valditor $imageValidationError',
                         );
                         return Padding(
                           padding: EdgeInsets.only(top: 8.h),
                           child: Text(
-                            imageValidationError,
+                            productProvider.imageValidationError ?? '',
                             style: TextStyle(
                               color: AppConstants.errorColor,
-                              backgroundColor: AppConstants.whiteColorP5,
+                              // backgroundColor: AppConstants.whiteColorP5,
                               fontSize: isSmallScreen ? 10.sp : 4.sp,
                             ),
                           ),
@@ -164,7 +175,6 @@ class AdminProductScreen extends StatelessWidget {
                       }
                     },
                   ),
-
                   CustomTextFormField(
                     controller: productProvider.nameController,
                     label: 'Product Name',
@@ -236,7 +246,7 @@ class AdminProductScreen extends StatelessWidget {
                           hint: '0-100',
                           suffixIcon: Icon(
                             Icons.percent,
-                            color: AppConstants.primaryTransGColor,
+                            color: AppConstants.primaryColor,
                           ),
                           isSmallScreen: isSmallScreen,
                           keyboardType: TextInputType.numberWithOptions(
@@ -255,12 +265,15 @@ class AdminProductScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 10.h),
-                  Text(
-                    "Final Price: RS ${productProvider.finalPrice.toStringAsFixed(0)}",
-                    style: TextStyle(
-                      color: AppConstants.whiteColorP9,
-                      fontWeight: FontWeight.bold,
-                      fontSize: isSmallScreen ? 16.sp : 8.sp,
+                  Selector<ProductProvider, double>(
+                    selector: (_, prodProvider) => prodProvider.finalPrice,
+                    builder: (_, finalPrice, child) => Text(
+                      "Final Price: RS ${finalPrice.toStringAsFixed(0)}",
+                      style: TextStyle(
+                        color: AppConstants.whiteColorP9,
+                        fontWeight: FontWeight.bold,
+                        fontSize: isSmallScreen ? 16.sp : 8.sp,
+                      ),
                     ),
                   ),
                   CategoryDropdownFormField(
@@ -280,37 +293,40 @@ class AdminProductScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-            CustomLoadingButton(
-              isSmallScreen: isSmallScreen,
-              isLoading: productProvider.isLoading,
-              height: isSmallScreen ? 50.h : 80.h,
-              width: isSmallScreen ? .7.sw : .4.sw,
-              onPressed: () async {
-                // Validate images using provider method
-                productProvider.validateImages();
-                if (_formKey.currentState?.validate() != true ||
-                    !productProvider.validateImages()) {
-                  debugPrint(
-                    '****** image validattr : ${productProvider.validateImages()}',
-                  );
-                  return;
-                }
-                final bool result = await productProvider.uploadProduct();
-                if (result) {
-                  NavigationService().showSnackBar(
-                    title: 'Success',
-                    message: 'Product Added Successfully...',
-                    type: ContentType.success,
-                  );
-                } else {
-                  NavigationService().showSnackBar(
-                    title: 'Failed',
-                    message: 'Failed to add Product...',
-                    type: ContentType.failure,
-                  );
-                }
-              },
-              text: 'UPLOAD PRODUCT',
+            Selector<ProductProvider, bool>(
+              selector: (_, prodProvider) => prodProvider.isLoading,
+              builder: (_, isLoading, __) => CustomLoadingButton(
+                isSmallScreen: isSmallScreen,
+                isLoading: isLoading,
+                height: isSmallScreen ? 50.h : 80.h,
+                width: isSmallScreen ? .7.sw : .4.sw,
+                onPressed: () async {
+                  // Validate images using provider method
+                  productProvider.validateImages();
+                  if (_formKey.currentState?.validate() != true ||
+                      !productProvider.validateImages()) {
+                    debugPrint(
+                      '****** image validattr : ${productProvider.validateImages()}',
+                    );
+                    return;
+                  }
+                  final bool result = await productProvider.uploadProduct();
+                  if (result) {
+                    NavigationService().showSnackBar(
+                      title: 'Success',
+                      message: 'Product Added Successfully...',
+                      type: ContentType.success,
+                    );
+                  } else {
+                    NavigationService().showSnackBar(
+                      title: 'Failed',
+                      message: 'Failed to add Product...',
+                      type: ContentType.failure,
+                    );
+                  }
+                },
+                text: 'UPLOAD PRODUCT',
+              ),
             ),
           ],
         ),

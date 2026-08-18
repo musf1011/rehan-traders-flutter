@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: Icon(
                       // Icons.filter_list,
                       Icons.search,
-                      color: AppConstants.primaryTransGColor,
+                      color: AppConstants.primaryColor,
                       size: isSmallScreen ? 30.h : 80.h,
                     ),
                     onChanged: homeProvider.updateSearch,
